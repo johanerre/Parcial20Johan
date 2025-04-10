@@ -7,7 +7,7 @@ app = Flask(__name__)
 vehiculos = {}
 parqueadero = [None] * 10
 registro_tiempos = {}
-historial_pagos = {}
+historial_pagoss = {}
 
 class VehiculoNoRegistrado(Exception):
     pass
@@ -50,7 +50,7 @@ def calcular_tarifa(placa, tiempo_total):
     tarifa_por_hora = 5000 if vehiculos[placa]["tipo"].lower() == "carro" else 3000
     horas = max(1, round(tiempo_total / 3600))  
     total_pagar = horas * tarifa_por_hora
-    historial_pagos[placa] = {"tiempo": horas, "total": total_pagar}
+    historial_pagoss[placa] = {"tiempo": horas, "total": total_pagar}
     print(f"Tarifa calculada: {total_pagar} COP ({horas} horas).")
 
 def registrar_ingreso_salida(placa):
@@ -73,10 +73,10 @@ def registrar_ingreso_salida(placa):
         print(e)
 
 def generar_reporte():
-    if not historial_pagos:
+    if not historial_pagoss:
         print("No hay historial de pagos.")
     else:
-        print(json.dumps(historial_pagos, indent=4))
+        print(json.dumps(historial_pagoss, indent=4))
 
 def menu():
     while True:
